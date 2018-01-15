@@ -919,7 +919,7 @@ void hydranfc_sniff_14443A(t_hydra_console *con, bool start_of_frame, bool end_o
 						nb_data++;
 						tmp_u8_data_nb_bit=0;
 						/* Convert Hex to ASCII + Space */
-						sniff_write_8b_ASCII_HEX(tmp_u8_data, TRUE);
+						sniff_write_8b_ASCII_HEX(tmp_u8_data, FALSE);
 						/* Write parity bits */
 						sniff_write_Parity_PM3(miller_modified_106kb[ds_data]);
 
@@ -935,7 +935,7 @@ void hydranfc_sniff_14443A(t_hydra_console *con, bool start_of_frame, bool end_o
 						nb_data++;
 						tmp_u8_data_nb_bit=0;
 						/* Convert Hex to ASCII + Space */
-						sniff_write_8b_ASCII_HEX(tmp_u8_data, TRUE);
+						sniff_write_8b_ASCII_HEX(tmp_u8_data, FALSE);
 						/* Write parity bits */
 						sniff_write_Parity_PM3(manchester_106kb[ds_data]);
 
