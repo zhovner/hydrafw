@@ -695,6 +695,20 @@ void sniff_write_bin_8b(uint8_t data)
 	g_sbuf_idx++;
 }
 
+/* Write parity bits in proxmark3 style */
+__attribute__ ((always_inline)) static inline
+void sniff_write_Parity_PM3(uint8_t parity)
+{
+	uint32_t i;
+	i = g_sbuf_idx;
+	if(parity == 0)
+		g_sbuf[i+0] = ' ';
+	else
+		g_sbuf[i+0] = '!';
+	g_sbuf[i+1] = ' ';
+	g_sbuf_idx +=2;
+}
+
 void hydranfc_sniff_14443A(t_hydra_console *con, bool start_of_frame, bool end_of_frame, bool sniff_trace_uart1)
 {
 	(void)con;
@@ -906,6 +920,8 @@ void hydranfc_sniff_14443A(t_hydra_console *con, bool start_of_frame, bool end_o
 						tmp_u8_data_nb_bit=0;
 						/* Convert Hex to ASCII + Space */
 						sniff_write_8b_ASCII_HEX(tmp_u8_data, TRUE);
+						/* Write parity bits */
+						sniff_write_Parity_PM3(miller_modified_106kb[ds_data]);
 
 						tmp_u8_data=0; /* Parity bit discarded */
 					}
@@ -920,6 +936,8 @@ void hydranfc_sniff_14443A(t_hydra_console *con, bool start_of_frame, bool end_o
 						tmp_u8_data_nb_bit=0;
 						/* Convert Hex to ASCII + Space */
 						sniff_write_8b_ASCII_HEX(tmp_u8_data, TRUE);
+						/* Write parity bits */
+						sniff_write_Parity_PM3(manchester_106kb[ds_data]);
 
 						tmp_u8_data=0; /* Parity bit discarded */
 					}
